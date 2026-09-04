@@ -9,12 +9,6 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   tanstackStart: {},
   nitro: {
-    preset: "vercel",
-    minify: true,
-    rollupConfig: {
-      output: {
-        inlineDynamicImports: true,
-      }
-    }
-  },
+    preset: "vercel"
+  }
 });
