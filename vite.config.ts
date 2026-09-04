@@ -9,6 +9,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   tanstackStart: {},
   nitro: {
-    preset: "vercel"
+    preset: "vercel",
+    // @ts-expect-error - rollupConfig is valid in Nitro but missing from these types
+    rollupConfig: {
+      output: {
+        inlineDynamicImports: true,
+      }
+    }
   }
 });
