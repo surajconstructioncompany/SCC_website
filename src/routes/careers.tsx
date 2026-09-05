@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Briefcase, GraduationCap, Loader2, Send } from "lucide-react";
+import { Loader2, ArrowUpRight, ArrowRight, Check, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -7,16 +7,7 @@ import { sendCareerEmail } from "@/lib/send-career-email";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { PageHeader } from "@/components/site/PageHeader";
-import { SlideUp, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
@@ -31,24 +22,6 @@ export const Route = createFileRoute("/careers")({
   }),
   component: Careers,
 });
-
-const roles = [
-  "Civil Engineer",
-  "Project Manager",
-  "Site Supervisor",
-  "Equipment Operator",
-  "Safety Officer",
-  "Administrative Staff",
-  "Other",
-];
-
-const experiences = [
-  "Fresher",
-  "1-3 years",
-  "3-5 years",
-  "5-10 years",
-  "10+ years",
-];
 
 /** Convert a File to a base64 string (without the data-url prefix) */
 function fileToBase64(file: File): Promise<string> {
@@ -65,29 +38,27 @@ function fileToBase64(file: File): Promise<string> {
 }
 
 function Careers() {
-  const [role, setRole] = useState("");
-  const [experience, setExperience] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!role) {
-      toast.error("Please select a role.");
-      return;
-    }
 
-    setSubmitting(true);
+    setSubmitStatus('submitting');
     const form = event.currentTarget;
     const formData = new FormData(form);
 
     const name = formData.get("name") as string;
     const phone = formData.get("phone") as string;
     const email = formData.get("email") as string;
-    const details = formData.get("details") as string;
-    const otherRole = formData.get("otherRole") as string;
+    const dob = formData.get("dob") as string;
+    const jobTitle = formData.get("jobTitle") as string;
+    const position = formData.get("position") as string;
+    const currentSalary = formData.get("currentSalary") as string;
+    const expectedSalary = formData.get("expectedSalary") as string;
+    const address = formData.get("address") as string;
+    
     const files = formData.getAll("documents") as File[];
     const validFiles = files.filter((f) => f.size > 0);
-    const finalRole = role === "Other" && otherRole ? otherRole : role;
 
     try {
       // Convert files to base64 for the server function
@@ -103,221 +74,222 @@ function Careers() {
           name,
           phone,
           email,
-          role: finalRole,
-          experience,
-          details,
+          dob,
+          jobTitle,
+          position,
+          currentSalary,
+          expectedSalary,
+          address,
           attachments,
         },
       });
 
       if (result.success) {
+        setSubmitStatus('success');
         toast.success("Application submitted!", {
           description:
             "Thank you for applying. Our HR team will review your application and get back to you.",
         });
         form.reset();
-        setRole("");
-        setExperience("");
+        setTimeout(() => setSubmitStatus('idle'), 3000);
       } else {
+        setSubmitStatus('error');
         toast.error("Failed to send application", {
           description:
             result.error || "Something went wrong. Please try again.",
         });
+        setTimeout(() => setSubmitStatus('idle'), 3000);
       }
     } catch {
+      setSubmitStatus('error');
       toast.error("Network error", {
         description:
           "Could not reach the server. Please check your connection and try again.",
       });
-    } finally {
-      setSubmitting(false);
+      setTimeout(() => setSubmitStatus('idle'), 3000);
     }
   }
 
   return (
-    <>
-      <SlideUp
-        yOffset={-20}
-        className="relative overflow-hidden border-b border-border/70"
-      >
-        <img
-          src="/career/career.png"
-          alt="Careers background"
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
-        <div
-          className="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 via-white/50 to-transparent dark:from-background/90 dark:via-background/50 dark:to-transparent"
-          aria-hidden
-        />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 z-10">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#df9b31]">
-            Careers
-          </p>
-          <div className="mt-3 mb-5 w-16 border-t-2 border-[#df9b31]" />
-          <h1 className="text-4xl font-semibold uppercase leading-[1.1] md:text-[3.5rem] text-foreground">
-            Build your <span className="text-[#df9b31]">future</span>
-            <br />
-            with us
-          </h1>
-          <div className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            <p>
-              Join a team dedicated to constructing world-class infrastructure.
-            </p>
-            <p className="mt-1">
-              We are always looking for passionate professionals to drive our
-              projects forward.
-            </p>
+    <div className="min-h-screen bg-gray-50/50 dark:bg-black py-16 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-center text-4xl font-bold mb-12 text-foreground">
+          Career <span className="text-[#df9b31]">Form</span>
+        </h1>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left Column - Image */}
+          <div className="relative rounded-[2rem] overflow-hidden h-[600px] lg:h-full min-h-[500px]">
+            <img
+              src="/career/career.png"
+              alt="Career Background"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Optional overlay if needed to match styling */}
+            <div className="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
           </div>
-        </div>
-      </SlideUp>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.5fr_1fr]">
-        <StaggerContainer delayChildren={0.2} staggerChildren={0.15}>
-          <StaggerItem>
-            <form
-              onSubmit={handleSubmit}
-              className="surface-card space-y-6 p-7 md:p-9"
-            >
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    required
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone *</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    placeholder="+91"
-                  />
-                </div>
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Role Applied For *</Label>
-                  <Select value={role} onValueChange={setRole} required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {roles.map((r) => (
-                        <SelectItem key={r} value={r}>
-                          {r}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {role === "Other" && (
-                    <div className="pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                      <Input
-                        name="otherRole"
-                        placeholder="Please specify the role..."
-                        required
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label>Experience</Label>
-                  <Select value={experience} onValueChange={setExperience}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select years" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {experiences.map((e) => (
-                        <SelectItem key={e} value={e}>
-                          {e}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
+          {/* Right Column - Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="details">Cover Letter / Details</Label>
-                <Textarea
-                  id="details"
-                  name="details"
-                  rows={5}
-                  placeholder="Tell us about your background, skills, and why you want to join us..."
+                <Label htmlFor="name" className="font-semibold text-sm">Full Name *</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Your Name *"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="documents">Resume</Label>
+                <Label htmlFor="phone" className="font-semibold text-sm">Phone *</Label>
                 <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  placeholder="Phone"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="font-semibold text-sm">Email Address *</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="Email Address *"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dob" className="font-semibold text-sm">Date Of Birth *</Label>
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  required
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6 text-muted-foreground"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="jobTitle" className="font-semibold text-sm">Job Title *</Label>
+                <Input
+                  id="jobTitle"
+                  name="jobTitle"
+                  required
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="position" className="font-semibold text-sm">Position Applying For *</Label>
+                <Input
+                  id="position"
+                  name="position"
+                  required
+                  placeholder="Applying For"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="currentSalary" className="font-semibold text-sm">Current Salary *</Label>
+                <Input
+                  id="currentSalary"
+                  name="currentSalary"
+                  required
+                  placeholder="Current Salary"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="expectedSalary" className="font-semibold text-sm">Expected Salary *</Label>
+                <Input
+                  id="expectedSalary"
+                  name="expectedSalary"
+                  required
+                  placeholder="Expected Salary"
+                  className="bg-white text-black border-none shadow-sm rounded-xl py-6"
+                />
+              </div>
+
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="address" className="font-semibold text-sm">Address *</Label>
+                <Textarea
+                  id="address"
+                  name="address"
+                  required
+                  rows={4}
+                  placeholder="Your Message.."
+                  className="bg-white text-black border-none shadow-sm rounded-xl resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <Label htmlFor="documents" className="font-semibold text-sm block">Upload Your Resume</Label>
+              <div className="flex items-center">
+                <input
                   id="documents"
                   name="documents"
                   type="file"
-                  multiple
-                  className="cursor-pointer file:mr-4 file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:py-1 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20"
+                  required
+                  className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer"
                 />
-                <p className="text-xs text-muted-foreground">
-                  Resume, license, experience certificates, etc.
-                </p>
               </div>
+            </div>
 
-              <Button type="submit" size="lg" disabled={submitting}>
-                {submitting ? (
-                  <>
-                    <Loader2 className="mr-2 size-4 animate-spin" />
-                    Submitting…
-                  </>
+            <div className="pt-4">
+              <Button
+                type="submit"
+                disabled={submitStatus === 'submitting'}
+                className={`group rounded-full shadow-sm flex items-center gap-3 h-auto transition-all duration-300 ${
+                  submitStatus === 'success' 
+                    ? 'bg-green-500 text-white hover:bg-green-600 border-transparent py-4 px-6' 
+                    : submitStatus === 'error'
+                    ? 'bg-red-500 text-white hover:bg-red-600 border-transparent py-4 px-6'
+                    : 'bg-white text-black hover:bg-[#df9b31] hover:text-white border border-gray-200 hover:border-[#df9b31] py-4 pl-6 pr-2 hover:pr-6 hover:pl-6'
+                }`}
+              >
+                <span className="font-semibold text-sm">
+                  {submitStatus === 'submitting' ? "Sending..." 
+                   : submitStatus === 'success' ? "Sent Successfully" 
+                   : submitStatus === 'error' ? "Failed to Send" 
+                   : "Send Message"}
+                </span>
+                
+                {submitStatus === 'submitting' ? (
+                  <div className="bg-[#df9b31] rounded-full p-2.5 text-white flex items-center justify-center">
+                    <Loader2 className="size-4 animate-spin" />
+                  </div>
+                ) : submitStatus === 'success' ? (
+                  <Check className="size-5" />
+                ) : submitStatus === 'error' ? (
+                  <X className="size-5" />
                 ) : (
-                  <>
-                    <Send className="mr-2 size-4" />
-                    Submit Application
-                  </>
+                  <div className="relative flex items-center justify-center size-9">
+                    {/* Default state: Golden circle with ArrowUpRight */}
+                    <div className="absolute inset-0 bg-[#df9b31] rounded-full flex items-center justify-center transition-opacity duration-300 group-hover:opacity-0">
+                      <ArrowUpRight className="size-4 text-white stroke-[3]" />
+                    </div>
+                    {/* Hover state: Just ArrowRight */}
+                    <ArrowRight className="absolute size-5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
                 )}
               </Button>
-            </form>
-          </StaggerItem>
-        </StaggerContainer>
-
-        <aside className="space-y-6">
-          <SlideUp delay={0.4}>
-            <div className="surface-card p-7">
-              <h2 className="text-2xl">Why Join Us?</h2>
-              <div className="gold-rule mt-4" />
-              <ul className="mt-6 space-y-5 text-sm text-muted-foreground">
-                <li className="flex gap-3">
-                  <Briefcase className="mt-0.5 size-5 shrink-0 text-primary" />
-                  Work on impactful, large-scale infrastructure projects across
-                  multiple states.
-                </li>
-                <li className="flex gap-3">
-                  <GraduationCap className="mt-0.5 size-5 shrink-0 text-primary" />
-                  Continuous learning and career advancement opportunities.
-                </li>
-                <li className="flex gap-3">
-                  <Mail className="mt-0.5 size-5 shrink-0 text-primary" />
-                  Direct communication with management and a supportive work
-                  environment.
-                </li>
-              </ul>
             </div>
-          </SlideUp>
-        </aside>
-      </section>
-    </>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
+

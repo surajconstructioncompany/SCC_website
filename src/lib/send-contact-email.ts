@@ -59,7 +59,7 @@ export const sendContactEmail = createServerFn({ method: "POST" })
 
     try {
       const { error } = await resend.emails.send({
-        from: `${data.name} (Contact Form) <surajcons.company@gmail.com>`,
+        from: `${data.name} (Contact Form) <contact@surajconstructioncompany.in>`,
         to: ["surajcons.company@gmail.com"],
         replyTo: data.email,
         subject: `New Website Enquiry from – ${data.name}`,

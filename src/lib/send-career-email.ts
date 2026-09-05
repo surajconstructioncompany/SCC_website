@@ -10,9 +10,12 @@ interface CareerFormPayload {
   name: string;
   phone: string;
   email: string;
-  role: string;
-  experience: string;
-  details: string;
+  dob: string;
+  jobTitle: string;
+  position: string;
+  currentSalary: string;
+  expectedSalary: string;
+  address: string;
   /** Base-64 encoded files with metadata */
   attachments: { filename: string; content: string }[];
 }
@@ -51,19 +54,31 @@ export const sendCareerEmail = createServerFn({ method: "POST" })
               <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.phone}</td>
             </tr>
             <tr style="background-color: #fafafa;">
-              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Position Applied For</td>
-              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.role || "Not specified"}</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Date of Birth</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.dob || "Not specified"}</td>
             </tr>
             <tr>
-              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Experience</td>
-              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.experience || "Not specified"}</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Job Title</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.jobTitle || "Not specified"}</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Position Applied For</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.position || "Not specified"}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Current Salary</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.currentSalary || "Not specified"}</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Expected Salary</td>
+              <td style="padding: 10px; border: 1px solid #e2e8f0;">${data.expectedSalary || "Not specified"}</td>
             </tr>
           </tbody>
         </table>
         
-        <h3 style="color: #444; margin-bottom: 12px;">Application Details</h3>
+        <h3 style="color: #444; margin-bottom: 12px;">Address / Message</h3>
         <div style="background-color: #f8fafc; padding: 16px; border-left: 4px solid #2563eb; border-radius: 4px; margin-bottom: 16px;">
-          <p style="white-space: pre-wrap; margin: 0; line-height: 1.5;">${data.details || "No details provided."}</p>
+          <p style="white-space: pre-wrap; margin: 0; line-height: 1.5;">${data.address || "No details provided."}</p>
         </div>
         
         ${data.attachments.length > 0 ? `<div style="margin-top: 20px; padding: 12px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px; color: #166534;"><p style="margin: 0; font-weight: 500;">📎 Documents Attached</p><p style="margin: 4px 0 0 0; font-size: 14px;">${data.attachments.length} document(s) have been attached to this application.</p></div>` : ""}
@@ -72,10 +87,12 @@ export const sendCareerEmail = createServerFn({ method: "POST" })
 
     try {
       const { error } = await resend.emails.send({
-        from: `${data.name} (Career Application) <surajcons.company@gmail.com>`,
+        // Resend requires the "from" email to be a verified domain. You cannot use @gmail.com.
+        // For testing, use "onboarding@resend.dev". Once you verify a custom domain on Resend, change this to something like "careers@yourdomain.com".
+        from: `Career Application <career@surajconstructioncompany.in>`,
         to: ["hrmanagerscc@outlook.com"],
         replyTo: data.email,
-        subject: `Career Application for job role of ${data.role || "General"} from candidate ${data.name}`,
+        subject: `Career Application for job role of ${data.position || data.jobTitle || "General"} from candidate ${data.name}`,
         html: htmlBody,
         attachments: data.attachments.map((att) => ({
           filename: att.filename,
