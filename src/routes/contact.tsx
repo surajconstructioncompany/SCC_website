@@ -20,7 +20,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Email surajcons.company@gmail.com. Co-operate office at 125-126, Officers Colony, Rajgarh Road, Azad Nagar, Hisar-125001. Open Monday to Saturday, 9 AM to 7 PM.",
+          "Email surajcons.company@gmail.com. Co-operate office at 125-126, Officers Colony, Rajgarh Road, Azad Nagar, Hisar-125001. Open Monday to Saturday, 9:30 AM to 6:30 PM.",
       },
       { property: "og:title", content: "Contact Suraj Construction Company" },
       {
