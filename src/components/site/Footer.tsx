@@ -25,10 +25,8 @@ export function Footer() {
               className="hidden h-24 w-24 object-contain dark:block"
             />
           </>
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Suraj Construction Company builds highways, rural roads, bridges and
-            urban infrastructure with certified quality control and on-time
-            delivery since 2004.
+          <p className="mt-4 max-w-sm text-sm text-muted-foreground leading-relaxed">
+            <strong>Suraj Construction Company</strong> builds <strong>highways, rural roads, bridges and urban infrastructure</strong> with certified quality control and on-time delivery since 2004. Explore our <Link to="/projects" className="font-bold hover:text-primary">Projects</Link>, company information, partners and contact details to learn more about our infrastructure capabilities.
           </p>
         </StaggerItem>
 

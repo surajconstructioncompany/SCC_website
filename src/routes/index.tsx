@@ -18,6 +18,12 @@ import {
   StaggerItem,
 } from "@/components/ui/motion";
 import { motion } from "framer-motion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { projects } from "@/data/projects";
 
 export const Route = createFileRoute("/")({
@@ -74,22 +80,22 @@ const services = [
   {
     icon: RouteIcon,
     title: "Highways & Expressways",
-    text: "Road construction, widening, strengthening and rehabilitation for major highway corridors.",
+    text: "Suraj Construction Company undertakes road construction, widening, strengthening and rehabilitation for major highway corridors, supporting the development and improvement of essential transport infrastructure.",
   },
   {
     icon: MoveHorizontal,
     title: "Road Widening & Strengthening",
-    text: "Upgrading existing carriageways through widening, pavement strengthening and improvement works.",
+    text: "Upgrading existing carriageways through widening, pavement strengthening and improvement works to improve existing road infrastructure.",
   },
   {
     icon: FlyoverIcon,
     title: "Bridges, Flyovers & Culverts",
-    text: "Construction and improvement of flyovers, bridges, box culverts and associated structures.",
+    text: "Construction and improvement of flyovers, bridges, box culverts and associated structures as part of wider infrastructure and connectivity projects.",
   },
   {
     icon: Wrench,
     title: "Road Maintenance & O&M",
-    text: "Operation, maintenance and performance-based upkeep of highway and road infrastructure.",
+    text: "Operation, maintenance and performance-based upkeep of highway and road infrastructure, supporting the continued performance of completed road assets.",
   },
 ];
 
@@ -179,10 +185,10 @@ function Home() {
               We build the roads
             </span>{" "}
             <br className="hidden sm:block" />
-            <span className="text-gold-gradient">That move India.</span>
+            <span className="text-gold-gradient">that move India.</span>
           </h1>
-          <p className="mt-6 max-w-3xl text-3xl font-light leading-snug text-foreground/90 md:text-4xl">
-            Creating the routes through which progress travels.
+          <p className="mt-6 max-w-3xl text-xl font-light leading-snug text-foreground/90 md:text-2xl">
+            Suraj Construction Company delivers <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">road construction and infrastructure development</Link> for highways, rural roads, bridges and urban infrastructure. With experience since 2004, we focus on building and improving the routes through which progress travels.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Button asChild size="lg">
@@ -205,6 +211,9 @@ function Home() {
               <span className="text-primary font-medium">Proven.</span>
             </h2>
             <div className="gold-rule mt-6" />
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-muted-foreground">
+              Suraj Construction Company has delivered <strong>450+ KM of road and highway works</strong>, with <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">14+ projects delivered</Link>, <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">22 years of experience</Link>, work across <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">4+ states</Link> and <strong>730+ Cr in company's total revenue</strong>. These figures reflect the company's established experience in road and infrastructure projects.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:auto-rows-[240px]">
@@ -355,6 +364,9 @@ function Home() {
             </span>
           </h2>
           <div className="gold-rule mt-6" />
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            Our services cover key areas of <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">road and highway construction</Link>, infrastructure improvement and ongoing road asset maintenance.
+          </p>
         </SlideUp>
 
         <StaggerContainer
@@ -406,10 +418,13 @@ function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 mb-12">
           <SlideUp yOffset={20}>
             <p className="text-xs tracking-[0.3em] text-primary">OUR CLIENTS</p>
-            <h2 className="mt-4 text-4xl normal-case leading-[0.95] md:text-5xl font-light">
+            <h2 className="mt-4 text-4xl normal-case leading-[0.95] md:text-5xl font-light mb-6">
               Trusted by government authorities
             </h2>
-            <div className="gold-rule mt-5" />
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-muted-foreground">
+              Suraj Construction Company has experience delivering <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">government infrastructure projects</Link> for government authorities, including work associated with <strong>NHAI, FMDA, MP PWD, HSRDC and Haryana PWD</strong>. This experience reflects the company's established capability in executing public infrastructure and road projects.
+            </p>
+            <div className="gold-rule mt-6" />
           </SlideUp>
         </div>
 
@@ -462,15 +477,12 @@ function Home() {
             <h2 className="mt-4 text-4xl normal-case leading-[0.95] md:text-5xl font-light">
               Certified, equipped, <br className="hidden lg:block" />
               <span className="text-primary font-medium">
-                Built to deliver.
+                built to deliver.
               </span>
             </h2>
             <div className="gold-rule mt-6" />
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              A trusted Class-I registered contractor with Haryana PWD (B&R) and
-              other state departments, backed by an owned fleet of modern
-              construction equipment and in-house resources to execute projects
-              efficiently, reliably, and on schedule.
+              Suraj Construction Company is a <strong>Class-I registered contractor with Haryana PWD (B&R)</strong> and other state departments, backed by an owned fleet of modern construction equipment and in-house resources to execute projects efficiently, reliably and on schedule.
             </p>
           </SlideUp>
 
@@ -480,12 +492,12 @@ function Home() {
               {
                 icon: BadgeCheck,
                 title: "ISO 9001:2015",
-                text: "Certified quality management system",
+                text: "Certified quality management system.",
               },
               {
                 icon: ShieldCheck,
                 title: "Government Project Experience",
-                text: "Experience delivering infrastructure projects for government authorities",
+                text: "Experience delivering infrastructure projects for government authorities.",
               },
               {
                 icon: ClipboardCheck,
@@ -529,8 +541,7 @@ function Home() {
               <div className="relative z-10 max-w-sm">
                 <h3 className="text-2xl font-bold">Want to join our team?</h3>
                 <p className="mt-2 text-primary-foreground/80">
-                  Explore career opportunities and apply to join a fast-growing,
-                  innovative construction company.
+                  Explore <Link to="/careers" className="font-bold underline hover:text-white">career opportunities</Link> and learn more about opportunities with a fast-growing, innovative <strong>construction company</strong>.
                 </p>
               </div>
               <Button
@@ -545,6 +556,73 @@ function Home() {
               </Button>
             </SlideUp>
           </div>
+        </div>
+      </section>
+      <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
+        <SlideUp yOffset={20}>
+          <p className="text-xs font-semibold tracking-[0.32em] text-primary uppercase">
+            EXPERIENCE
+          </p>
+          <h2 className="mt-4 text-4xl normal-case leading-[0.95] md:text-5xl font-light">
+            Certification, capability <br className="hidden md:block"/>
+            <span className="text-primary font-medium">and project experience.</span>
+          </h2>
+          <div className="gold-rule mt-6" />
+          <p className="mt-6 max-w-4xl text-lg leading-relaxed text-muted-foreground">
+            Suraj Construction Company's <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">ISO 9001:2015 certification</Link>, Class-I contractor registration and experience delivering <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">government infrastructure projects</Link> demonstrate the company's established delivery capabilities. Its owned fleet of modern construction equipment and in-house resources support the execution of <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">road and highway projects</Link> across the company's areas of work. Visitors can explore the <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Projects</Link>, <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">About Us</Link> and <Link to="/boards" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Our Partners</Link> pages to understand the company's work, background and project relationships.
+          </p>
+        </SlideUp>
+      </section>
+
+      <section className="border-y border-border/70 bg-muted/20 py-24">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <SlideUp yOffset={20} className="text-center mb-12">
+            <h2 className="text-3xl normal-case leading-[0.95] md:text-4xl font-light">
+              Frequently Asked <span className="text-primary font-medium">Questions</span>
+            </h2>
+            <div className="gold-rule mt-6 mx-auto" />
+          </SlideUp>
+
+          <SlideUp delay={0.2} yOffset={20}>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left font-semibold">What road construction and infrastructure services does Suraj Construction Company provide?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  Suraj Construction Company provides road construction and infrastructure services including highways and expressways, road widening and strengthening, bridges, flyovers and culverts, and road maintenance and O&M.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-left font-semibold">What types of highway, road and infrastructure projects does Suraj Construction Company undertake?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  The company undertakes highway and road construction, widening, strengthening and rehabilitation works, along with bridges, flyovers, culverts and related infrastructure projects.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-left font-semibold">Does Suraj Construction Company undertake government and PWD infrastructure projects?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  Yes. Suraj Construction Company has experience delivering infrastructure projects for government authorities and is a Class-I registered contractor with Haryana PWD (B&R) and other state departments.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="text-left font-semibold">Does Suraj Construction Company undertake infrastructure projects across India?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  Suraj Construction Company has covered 4+ states through its project work. <Link to="/contact" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Contact the company</Link> to discuss the location, scope and requirements of a proposed infrastructure project.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-left font-semibold">What certifications, registrations and project experience does Suraj Construction Company have?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  The company is an ISO 9001:2015 certified organisation and a Class-I registered contractor with Haryana PWD (B&R) and other state departments, with 22 years of experience and 14+ projects delivered.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="text-left font-semibold">How can I discuss a road construction or infrastructure project with Suraj Construction Company?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground leading-relaxed text-base">
+                  You can contact Suraj Construction Company through its <Link to="/contact" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Contact page</Link> to discuss your road construction, highway, bridge or infrastructure project requirements and project scope.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </SlideUp>
         </div>
       </section>
     </>
