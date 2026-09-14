@@ -156,9 +156,154 @@ const extractClients = () => {
 };
 const uniqueClients = extractClients();
 
+const homepageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://www.surajconstructioncompany.in/#organization",
+      "name": "Suraj Construction Company",
+      "url": "https://www.surajconstructioncompany.in/",
+      "telephone": "+91 7404283720",
+      "email": "surajcons.company@gmail.com",
+      "foundingDate": "2004",
+      "description": "Suraj Construction Company is a civil infrastructure and road construction company established in 2004, delivering road, highway, bridge and infrastructure projects.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "125-126, Officers Colony, Rajgarh Road, Azad Nagar",
+        "addressLocality": "Hisar",
+        "addressRegion": "Haryana",
+        "postalCode": "125001",
+        "addressCountry": "IN"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:30",
+        "closes": "18:30"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/surajconstructioncompany"
+      ],
+      "knowsAbout": [
+        "Road Construction",
+        "Highway Construction",
+        "Road Widening",
+        "Road Strengthening",
+        "Bridge Construction",
+        "Flyover Construction",
+        "Culvert Construction",
+        "Road Maintenance",
+        "Infrastructure Development"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.surajconstructioncompany.in/#website",
+      "url": "https://www.surajconstructioncompany.in/",
+      "name": "Suraj Construction Company",
+      "publisher": {
+        "@id": "https://www.surajconstructioncompany.in/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.surajconstructioncompany.in/#webpage",
+      "url": "https://www.surajconstructioncompany.in/",
+      "name": "Suraj Construction Company",
+      "isPartOf": {
+        "@id": "https://www.surajconstructioncompany.in/#website"
+      },
+      "about": {
+        "@id": "https://www.surajconstructioncompany.in/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://www.surajconstructioncompany.in/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.surajconstructioncompany.in/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.surajconstructioncompany.in/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.surajconstructioncompany.in/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What road construction and infrastructure services does Suraj Construction Company provide?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Suraj Construction Company provides road construction and infrastructure services including highways and expressways, road widening and strengthening, bridges, flyovers and culverts, and road maintenance and O&M."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of highway, road and infrastructure projects does Suraj Construction Company undertake?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The company undertakes highway and road construction, widening, strengthening and rehabilitation works, along with bridges, flyovers, culverts and related infrastructure projects."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Suraj Construction Company undertake government and PWD infrastructure projects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Suraj Construction Company has experience delivering infrastructure projects for government authorities and is a Class-I registered contractor with Haryana PWD (B&R) and other state departments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Suraj Construction Company undertake infrastructure projects across India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Suraj Construction Company has covered 4+ states through its project work. Contact the company to discuss the location, scope and requirements of a proposed infrastructure project."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What certifications, registrations and project experience does Suraj Construction Company have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The company is an ISO 9001:2015 certified organisation and a Class-I registered contractor with Haryana PWD (B&R) and other state departments, with 22 years of experience and 14+ projects delivered."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I discuss a road construction or infrastructure project with Suraj Construction Company?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can contact Suraj Construction Company through its Contact page to discuss your road construction, highway, bridge or infrastructure project requirements and project scope."
+          }
+        }
+      ]
+    }
+  ]
+};
+
 function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }}
+      />
       <section className="relative isolate overflow-hidden">
         <video
           src="/hero.mp4"
@@ -212,7 +357,7 @@ function Home() {
             </h2>
             <div className="gold-rule mt-6" />
             <p className="mt-6 max-w-4xl text-lg leading-relaxed text-muted-foreground">
-              Suraj Construction Company has delivered <strong>450+ KM of road and highway works</strong>, with <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">14+ projects delivered</Link>, <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">22 years of experience</Link>, work across <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">4+ states</Link> and <strong>730+ Cr in company's total revenue</strong>. These figures reflect the company's established experience in road and infrastructure projects.
+              Suraj Construction Company has delivered <strong>450+ KM of road and highway works</strong>, with <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">14+ projects delivered</Link>, <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">22 years of experience</Link>, work across <strong>4+ states</strong> and <strong>730+ Cr in company's total revenue</strong>. These figures reflect the company's established experience in road and infrastructure projects.
             </p>
           </div>
 
@@ -365,7 +510,7 @@ function Home() {
           </h2>
           <div className="gold-rule mt-6" />
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Our services cover key areas of <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">road and highway construction</Link>, infrastructure improvement and ongoing road asset maintenance.
+            Our services cover key areas of road and highway construction, infrastructure improvement and ongoing road asset maintenance.
           </p>
         </SlideUp>
 
@@ -569,7 +714,7 @@ function Home() {
           </h2>
           <div className="gold-rule mt-6" />
           <p className="mt-6 max-w-4xl text-lg leading-relaxed text-muted-foreground">
-            Suraj Construction Company's <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">ISO 9001:2015 certification</Link>, Class-I contractor registration and experience delivering <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">government infrastructure projects</Link> demonstrate the company's established delivery capabilities. Its owned fleet of modern construction equipment and in-house resources support the execution of <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">road and highway projects</Link> across the company's areas of work. Visitors can explore the <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Projects</Link>, <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">About Us</Link> and <Link to="/boards" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Our Partners</Link> pages to understand the company's work, background and project relationships.
+            Suraj Construction Company's <Link to="/about" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">ISO 9001:2015 certification</Link>, Class-I contractor registration and experience delivering government infrastructure projects demonstrate the company's established delivery capabilities. Its owned fleet of modern construction equipment and in-house resources support the execution of road and highway projects across the company's areas of work. Visitors can explore the <Link to="/projects" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Projects</Link> and <Link to="/boards" className="text-primary hover:no-underline hover:text-yellow-400 dark:hover:text-yellow-200 transition-colors font-medium">Our Partners</Link> pages to understand the company's work, background and project relationships.
           </p>
         </SlideUp>
       </section>
